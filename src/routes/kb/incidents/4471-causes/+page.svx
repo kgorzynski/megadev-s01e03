@@ -12,12 +12,22 @@ signature: kgorzynski
   import CauseTable from '#lib/kb/CauseTable.svelte';
   import RenderStamp from '#lib/kb/RenderStamp.svelte';
 
-  const issues = {};
+  const issues = {
+    parser: 'https://github.com/kgorzynski/megadev-s01e03/issues/1',
+    hint: 'https://github.com/kgorzynski/megadev-s01e03/issues/2',
+    'one-day move': 'https://github.com/kgorzynski/megadev-s01e03/issues/3',
+  };
 </script>
 
 [#4471](/kb/incidents/4471) is marked known: one bug, one fix queued. Its reports say
 otherwise. Read them by tenant, by booking form and by what the two dates in the body do,
 and they fall into three problems. Each needs its own fix, so each now has its own ticket.
+
+## The tickets
+
+- [parser: the shared parser reads every date month first](https://github.com/kgorzynski/megadev-s01e03/issues/1)
+- [hint: booking-v3 tells people to type month first](https://github.com/kgorzynski/megadev-s01e03/issues/2)
+- [one-day move: a date lands one day early](https://github.com/kgorzynski/megadev-s01e03/issues/3)
 
 ## The split
 

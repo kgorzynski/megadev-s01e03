@@ -5,9 +5,9 @@ The reports describe three different problems. Each one needs its own fix.
 
 | problem | reports | ticket |
 |---|---|---|
-| `parser`: the shared parser reads every date month first | 374 | (pending) |
-| `hint`: the booking-v3 form tells people to type month first | 33 | (pending) |
-| `one-day move`: a date lands one day early (time zone or day boundary) | 5 | (pending) |
+| `parser`: the shared parser reads every date month first | 374 | [#1](https://github.com/kgorzynski/megadev-s01e03/issues/1) |
+| `hint`: the booking-v3 form tells people to type month first | 33 | [#2](https://github.com/kgorzynski/megadev-s01e03/issues/2) |
+| `one-day move`: a date lands one day early (time zone or day boundary) | 5 | [#3](https://github.com/kgorzynski/megadev-s01e03/issues/3) |
 | **total** | **412** | |
 
 The export has 427 rows. 15 reports appear twice as exact copies. Each id counts once, so the total is 412.
