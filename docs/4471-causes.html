@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link href="../../_app/immutable/entry/start.CH5w6lId.js" rel="modulepreload">
+		<link href="../../_app/immutable/entry/payload.DSmR2FwN.js" rel="modulepreload">
+		<link href="../../_app/immutable/chunks/CRzLMJPS.js" rel="modulepreload">
+		<link href="../../_app/immutable/chunks/B2Ul7l_u.js" rel="modulepreload">
+		<link href="../../_app/immutable/chunks/BCPXOG7W.js" rel="modulepreload">
+		<link href="../../_app/immutable/chunks/Dh1V97Jm.js" rel="modulepreload">
+		<link href="../../_app/immutable/entry/app.Bbrr2QIo.js" rel="modulepreload">
+		<link href="../../_app/immutable/nodes/0.C9KfiiPz.js" rel="modulepreload">
+		<link href="../../_app/immutable/chunks/DK3Fl9T5.js" rel="modulepreload">
+		<link href="../../_app/immutable/nodes/5.Czd6yYVp.js" rel="modulepreload">
+		<link href="../../_app/immutable/chunks/tKWQXxeI.js" rel="modulepreload">
+		<link href="../../_app/immutable/chunks/BTPwLomz.js" rel="modulepreload">
+		<link href="../../_app/immutable/chunks/B3RXGzY2.js" rel="modulepreload">
+		<link href="../../_app/immutable/chunks/BXWM2-hM.js" rel="modulepreload">
+		<!--e2jw2j--><!----><title>#4471 · three problems, not one · support kb</title>
+		<link href="../../_app/immutable/assets/runbook.COyw0cbZ.css" rel="stylesheet">
+		<link href="../../_app/immutable/assets/CauseTable.DuKfINX_.css" rel="stylesheet">
+		<link href="../../_app/immutable/assets/_page.Dyfi9zfg.css" rel="stylesheet">
+  </head>
+  <body data-sveltekit-preload-data="hover">
+    <div style="display: contents"><!--[--><!--[--><!--[0--><!--[--><!--[--><!--[-1--><!--[--><div class="kb svelte-e2jw2j"><header><a class="crumb svelte-e2jw2j" href="/kb">support desk · kb</a> <h1 class="svelte-e2jw2j">#4471 · three problems, not one</h1> <p class="meta svelte-e2jw2j"><span>owner <b>kgorzynski</b></span> <span class="status open svelte-e2jw2j">open</span> <span class="svelte-e2jw2j">reviewed 2026-10-28 · 0 days ago</span></p></header> <!--[-1--><!--]--> <main><p><a href="/kb/incidents/4471">#4471</a> is marked known: one bug, one fix queued. Its reports say
+otherwise. Read them by tenant, by booking form and by what the two dates in the body do,
+and they fall into three problems. Each needs its own fix, so each now has its own ticket.</p> <h2>The split</h2> <p class="sum svelte-h3x27m"><strong>412</strong> reports merged into #4471 · <strong>3</strong> problems <span class="rows svelte-h3x27m">(427 rows in the export; 15 were the same report twice)</span></p> <table><thead><tr><th>problem</th><th>reports</th><th>kb rule files them as</th><th>channels</th><th>tenants</th><th>seen</th><th>ticket</th></tr></thead><tbody><!--[--><tr><td><code>parser</code></td><td><strong>374</strong></td><td class="tags svelte-h3x27m">parser ×374</td><td class="tags svelte-h3x27m">app ×202 · email ×147 · form ×25</td><td>11</td><td>2026-04-01 → 2026-10-04</td><td><!--[-1-->—<!--]--></td></tr><tr><td><code>hint</code></td><td><strong>33</strong></td><td class="tags svelte-h3x27m">hint ×33</td><td class="tags svelte-h3x27m">form ×33</td><td>3</td><td>2026-04-17 → 2026-09-22</td><td><!--[-1-->—<!--]--></td></tr><tr><td><code>one-day move</code></td><td><strong>5</strong></td><td class="tags svelte-h3x27m">parser ×5</td><td class="tags svelte-h3x27m">email ×3 · app ×2</td><td>5</td><td>2026-04-02 → 2026-10-04</td><td><!--[-1-->—<!--]--></td></tr><!--]--></tbody></table> <p class="note svelte-h3x27m">The kb rule alone: parser ×379 · hint ×33. Its <code>parser</code> count holds the
+  5 one-day moves (R-41202, R-41209, R-41236, R-41344, R-41620); this page counts them apart, so <code>parser</code> here is 374.</p><!----> <h2>The three problems</h2> <h3>1. <code>parser</code>: the shared parser reads every date month first</h3> <p>Our tenants write the day first. The parser reads month first, so day and month swap:
+7 April becomes 4 July. This is the bug #4471 was opened for, and most of its reports.
+It comes in on every channel: app, email, and the booking-v2 form.</p> <blockquote><p>“Our 7 April reminder went out on 4 July. Is this a joke.” (R-41200, harbour.dental)</p></blockquote> <h3>2. <code>hint</code>: booking-v3 tells people to type month first</h3> <p>The booking-v3 form prints <code>MM/DD/YYYY</code> under its date field. People type what the hint says,
+month first. The form then reads the date the tenant’s way, day first. The dates swap, but
+the parser is not involved: fixing the parser leaves this bug in place. It shows up only on
+the form channel of booking-v3 tenants. The kb’s own table already says it is not this
+ticket and has no ticket of its own.</p> <blockquote><p>“We had two people show up on 8 June. They were booked for 6 August.” (R-41241, alder.physio)</p></blockquote> <h3>3. <code>one-day move</code>: a date lands one day early</h3> <p>These reports do not swap day and month. The date moves by one day: Tuesday becomes Monday.
+A flip cannot do that. It reads like a time zone or day-boundary bug: the same meeting shows
+on different days for clients in different cities. The desk already noted these reports in <code>desk-notes.json</code>.</p> <blockquote><p>“Client in Lisbon got Tuesday. Client in Toronto got Monday. Same meeting. We held it twice.” (R-41344, pale.harbour)</p></blockquote> <p><strong>Where this page differs from the kb rule.</strong> The kb rule (<code>causes.ts</code>) knows only two causes.
+It files the one-day moves under <code>parser</code> by tenant and footnotes them. This page counts them
+as a problem of their own, because a parser fix will not fix them. The kb’s table, unchanged:</p> <p class="sum svelte-12oyimm"><strong>412</strong> reports merged into #4471 · <strong>2</strong> causes</p> <table><thead><tr><th>cause</th><th>reports</th><th>tagged as</th><th>tenants</th><th>seen</th><th></th></tr></thead><tbody><!--[--><tr class="svelte-12oyimm"><td class="svelte-12oyimm"><code>parser</code></td><td class="svelte-12oyimm">379</td><td class="tags svelte-12oyimm">parser ×356 · hint ×23</td><td class="svelte-12oyimm">11</td><td class="svelte-12oyimm">2026-04-01 → 2026-10-04</td><td class="svelte-12oyimm">#4471</td></tr><tr class="svelte-12oyimm wrong"><td class="svelte-12oyimm"><code>hint</code></td><td class="svelte-12oyimm">33</td><td class="tags svelte-12oyimm">hint ×18 · parser ×15</td><td class="svelte-12oyimm">3</td><td class="svelte-12oyimm">2026-04-17 → 2026-09-22</td><td class="svelte-12oyimm">not this ticket — no ticket of its own</td></tr><!--]--></tbody></table> <!--[--><!--[0--><p class="note svelte-12oyimm">5 reports read as a one-day move; filed under <code>parser</code> by tenant.</p><!--]--><!--[-1--><!--]--><!--]--><!----> <h2>How the counts are made</h2> <ul><li>Each id counts once: the export repeats some reports, and the component drops the copies.</li> <li><code>hint</code> and <code>parser</code> follow the kb rule in <code>causes.ts</code>, unchanged.</li> <li><code>one-day move</code> is the list in <code>desk-notes.json</code>. A script in this repo
+(<code>scripts/analyze.py</code>) reads every body on its own and picks out the same reports.</li> <li>Some <code>parser</code> reports name no dates in the body; they stay under <code>parser</code>, as the kb rule files them.</li> <li>Intake’s tag is a guess from the browser and is not used.</li></ul> <!--[0--><p class="stamp svelte-1280m42">desk ref <b class="svelte-1280m42">DR-TSAA-0674</b></p><!--]--><!----><!----></main> <footer class="svelte-e2jw2j">Pages are written by people. Tables and charts are built from data at render time.</footer></div><!--]--><!--]--><!--]--><!----><!--]--><!--]--><!--]--><!----> <!--[-1--><!--]--><!--]-->
+			
+			<script>
+				{
+					__sveltekit_xqx1n4 = {
+						base: new URL("../..", location).pathname.slice(0, -1),
+						version: "1793170795037"
+					};
+
+					const element = document.currentScript.parentElement;
+
+					import("../../_app/immutable/entry/start.CH5w6lId.js").then(async (kit) => {
+						kit.init(__sveltekit_xqx1n4);
+						const app = await import("../../_app/immutable/entry/app.Bbrr2QIo.js");
+						kit.start(app, element, {
+							node_ids: [0, 5],
+							data: [null,null],
+							form: null,
+							error: null
+						});
+					});
+				}
+			</script>
+		</div>
+  </body>
+</html>

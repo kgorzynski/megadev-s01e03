@@ -1,0 +1,70 @@
+---
+layout: runbook
+title: '#4471 · three problems, not one'
+owner: kgorzynski
+status: open
+reviewed: 2026-10-28
+signature: kgorzynski
+---
+
+<script>
+  import ProblemSplit from '#lib/kb/ProblemSplit.svelte';
+  import CauseTable from '#lib/kb/CauseTable.svelte';
+  import RenderStamp from '#lib/kb/RenderStamp.svelte';
+
+  const issues = {};
+</script>
+
+[#4471](/kb/incidents/4471) is marked known: one bug, one fix queued. Its reports say
+otherwise. Read them by tenant, by booking form and by what the two dates in the body do,
+and they fall into three problems. Each needs its own fix, so each now has its own ticket.
+
+## The split
+
+<ProblemSplit ticket={4471} {issues} />
+
+## The three problems
+
+### 1. `parser`: the shared parser reads every date month first
+
+Our tenants write the day first. The parser reads month first, so day and month swap:
+7 April becomes 4 July. This is the bug #4471 was opened for, and most of its reports.
+It comes in on every channel: app, email, and the booking-v2 form.
+
+> "Our 7 April reminder went out on 4 July. Is this a joke." (R-41200, harbour.dental)
+
+### 2. `hint`: booking-v3 tells people to type month first
+
+The booking-v3 form prints `MM/DD/YYYY` under its date field. People type what the hint says,
+month first. The form then reads the date the tenant's way, day first. The dates swap, but
+the parser is not involved: fixing the parser leaves this bug in place. It shows up only on
+the form channel of booking-v3 tenants. The kb's own table already says it is not this
+ticket and has no ticket of its own.
+
+> "We had two people show up on 8 June. They were booked for 6 August." (R-41241, alder.physio)
+
+### 3. `one-day move`: a date lands one day early
+
+These reports do not swap day and month. The date moves by one day: Tuesday becomes Monday.
+A flip cannot do that. It reads like a time zone or day-boundary bug: the same meeting shows
+on different days for clients in different cities. The desk already noted these reports in
+`desk-notes.json`.
+
+> "Client in Lisbon got Tuesday. Client in Toronto got Monday. Same meeting. We held it twice." (R-41344, pale.harbour)
+
+**Where this page differs from the kb rule.** The kb rule (`causes.ts`) knows only two causes.
+It files the one-day moves under `parser` by tenant and footnotes them. This page counts them
+as a problem of their own, because a parser fix will not fix them. The kb's table, unchanged:
+
+<CauseTable ticket={4471} />
+
+## How the counts are made
+
+- Each id counts once: the export repeats some reports, and the component drops the copies.
+- `hint` and `parser` follow the kb rule in `causes.ts`, unchanged.
+- `one-day move` is the list in `desk-notes.json`. A script in this repo
+  (`scripts/analyze.py`) reads every body on its own and picks out the same reports.
+- Some `parser` reports name no dates in the body; they stay under `parser`, as the kb rule files them.
+- Intake's tag is a guess from the browser and is not used.
+
+<RenderStamp {signature} />
