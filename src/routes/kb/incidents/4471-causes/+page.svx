@@ -4,7 +4,7 @@ title: '#4471 · three problems, not one'
 owner: kgorzynski
 status: open
 reviewed: 2026-10-28
-signature: kgorzynski
+signature: 'v1.eyJzdWIiOiIxNzIzIiwiYXVkIjoiY2hhbGxlbmdlOndoYXQtaXQtc2hvd3MiLCJpYXQiOjE3OTMxNzA5ODAsImV4cCI6MTc5MzI1NzM4MH0.PMT8HT5xfiYp-S_WsK0zYlCZIhPVxX5yCnGxU3baG0Q'
 ---
 
 <script>

@@ -38,4 +38,4 @@ npm run shot         # screenshot the page into docs/ (needs Brave or Chromium)
 npm run analyze      # re-run the Python check
 ```
 
-Signed page: signature `kgorzynski`, desk ref `DR-TSAA-0674`.
+Signed page: signature: the course ticket (in the page frontmatter), desk ref `DR-0S28-S3G2`.
